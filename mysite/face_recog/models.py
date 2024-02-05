@@ -21,16 +21,23 @@ class EmployeeInfo(models.Model):
   def __str__(self):
     return self.EmployeeID
 
+def image_upload_path(instance, filename):
+  # Generate the upload path dynamically based on EmployeeID
+  return f'{instance.EmployeeID}/{filename}'
+
 class Transaction(models.Model):
   autoID = models.AutoField(primary_key=True)
-  EmployeeID = models.IntegerField()  # Assuming EmployeeID is an integer, you can adjust accordingly
+  EmployeeID = models.IntegerField()
   Name = models.CharField(max_length=255)
   DateTime = models.DateTimeField()
-  CameraNo = models.IntegerField()  # Assuming CameraNo is an integer, you can adjust accordingly
-  Image = models.ImageField(upload_to='transaction_images/')  # Adjust the upload_to path as needed
+  CameraNo = models.IntegerField()
+  Image = models.ImageField(upload_to=image_upload_path)
 
-  def __str__(self):
-    return f"{self.EmployeeID} - {self.Name} - {self.DateTime}"
+  def save(self, *args, **kwargs):
+      if not self.pk:  # New instance, set the upload path
+          # You can leave this method empty if you don't have any additional logic to perform
+          pass
+      super().save(*args, **kwargs)
 
 @receiver(pre_delete, sender=Transaction)
 def delete_transaction_image(sender, instance, **kwargs):
