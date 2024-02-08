@@ -9,7 +9,7 @@ export default function Transaction(){
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/Transaction');
+            const response = await axios.get('http://192.168.99.92:8000/api/Transaction');
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -43,6 +43,7 @@ export default function Transaction(){
                             CameraNo={item.CameraNo}
                             DateTime={item.DateTime}
                             EmployeeID={item.EmployeeID}
+                            Image={item.Image}
                         />
                     ))}
                 </div>
