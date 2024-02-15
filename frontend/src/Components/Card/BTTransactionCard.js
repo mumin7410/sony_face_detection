@@ -17,7 +17,7 @@ export default function BTTransactionCard({
                 <div className="flex flex-row items-center">
                     <div>
                         <div className="w-[75px] h-[75px] rounded-[12px] bg-slate-700">
-                            <img src={`http://192.168.99.92:8000${Image}`} alt="Description of the image" />
+                            <img src={`http://192.168.1.134:8000${Image}`} alt="Description of the image" />
                         </div>
                     </div>
                     <div className="ml-[8px]">

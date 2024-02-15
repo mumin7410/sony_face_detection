@@ -74,9 +74,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Replace with the URL of your React app
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',  # Replace with the URL of your React app
+# ]
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -87,11 +87,10 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'mumin007',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432' 
     }
 }
-
-
+CORS_ALLOWED_ALL_ORIGINS = True
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

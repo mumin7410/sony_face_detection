@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from . import recog
 from .models import Member,Transaction
 from .serializers import MemberSerializer,TransactionSerializer
+from django.http import StreamingHttpResponse
+import cv2
 # Create your views here.
 
 
@@ -20,9 +22,6 @@ def getTransaction(request):
     serializer = TransactionSerializer(Blog, many=True)
     return Response(serializer.data)
 
-
 def index(request):
     fr = recog.FaceRecognition()
-    fr.run_recognition()
-    # member = Member.objects.get(Name="Mumin")
-    return HttpResponse("Index")
+    return fr.run_recognition()

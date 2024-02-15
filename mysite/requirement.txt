@@ -1,0 +1,4 @@
+deepface==0.0.79
+Django==4.2.5
+django-cors-headers==4.2.0
+djangorestframework==3.14.0
