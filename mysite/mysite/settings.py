@@ -90,7 +90,10 @@ DATABASES = {
         'PORT': '5432' 
     }
 }
-CORS_ALLOWED_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = ['*']
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
