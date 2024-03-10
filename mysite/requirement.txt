@@ -1,4 +1,7 @@
-deepface==0.0.79
-Django==4.2.5
-django-cors-headers==4.2.0
-djangorestframework==3.14.0
+deepface
+Django==4.2.11
+django-cors-headers
+djangorestframework
+psycopg2-binary==2.9.1
+mssql-django
+Pillow

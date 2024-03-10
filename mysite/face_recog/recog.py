@@ -1,5 +1,4 @@
 import cv2
-from mtcnn.mtcnn import MTCNN
 from deepface import DeepFace
 from .models import Transaction
 from django.core.files import File
@@ -11,7 +10,6 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from django.utils import timezone
 import threading
-import face_recognition
 from django.http import StreamingHttpResponse
 
 
@@ -22,24 +20,26 @@ class FaceRecognition:
         self.stay_still_lock = threading.Lock()  # Lock for synchronization
         self.thread_pool = ThreadPoolExecutor(max_workers=1)
 
-    def check_stranger(self, encode, threshold=0.6):
-        for item in self.stay_still_arr_stranger:
-            distance = face_recognition.face_distance([encode], item)[0]
-            similarity = distance < threshold
-            if similarity == True:
-                pass
-            else:
-                return similarity
+    # def check_stranger(self, encode, threshold=0.6):
+    #     for item in self.stay_still_arr_stranger:
+    #         distance = face_recognition.face_distance([encode], item)[0]
+    #         similarity = distance < threshold
+    #         if similarity == True:
+    #             pass
+    #         else:
+    #             return similarity
 
     def face_compare(self, result, temp_face_path,time):
         if len(result[0]) == 0:
+            print('not found!!!')
             pass
         else:
             s = result[0]['identity'][0]
+            print(s)
             x = s.split('/')[6]
             EmployeeID = x.split('_')[0] #EmpID
             Name = x.split('_')[1]
-
+            print(f'Name = {Name}')
             EmployeeID = EmployeeID.replace(':', '')
             Name = Name.replace(':', '')
 
@@ -52,12 +52,12 @@ class FaceRecognition:
                         time_difference = time - datetime.strptime(item['DateTime'], '%Y-%m-%d %H:%M:%S')
                         if time_difference.total_seconds() > 300:
                             # post data
-                            transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=1, Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
+                            transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=int(os.environ.get('CAMERA_VALUE', 1)), Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
                             transaction.save()
                             self.stay_still_arr.append({'EmployeeID': EmployeeID, 'Name': Name, 'DateTime': time.strftime('%Y-%m-%d %H:%M:%S')})
                 if not employee_in_arr:
                     # post data
-                    transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=1, Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
+                    transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=int(os.environ.get('CAMERA_VALUE', 1)), Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
                     transaction.save()
                     self.stay_still_arr.append({'EmployeeID': EmployeeID, 'Name': Name, 'DateTime': time.strftime('%Y-%m-%d %H:%M:%S')})
 

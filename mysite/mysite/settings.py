@@ -80,16 +80,30 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'facerecog',
+#         'USER': 'postgres',
+#         'PASSWORD': 'mumin007',
+#         'HOST': '43.239.251.75',
+#         'PORT': '5432' 
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'facerecog',
-        'USER': 'postgres',
-        'PASSWORD': 'mumin007',
-        'HOST': 'localhost',
-        'PORT': '5432' 
-    }
+        'ENGINE': 'mssql',
+        'NAME': 'DB_mai',
+        'USER': 'sa',
+        'PASSWORD': 'YourStrong@Passw0rd',
+        'HOST': '43.239.251.75',
+        'PORT': '1433',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
 }
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
