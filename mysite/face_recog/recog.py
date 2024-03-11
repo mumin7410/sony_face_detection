@@ -68,7 +68,7 @@ class FaceRecognition:
     def face_process(self, temp_face_path):
         result = DeepFace.find(
             img_path=temp_face_path,
-            db_path="C:/DriveD/Face recog website/mysite/face_recog/faces",
+            db_path="face_recog/faces",
             model_name='VGG-Face',
             enforce_detection=False
         )
