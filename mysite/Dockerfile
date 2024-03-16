@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -10,23 +10,27 @@ RUN apt-get update && \
         python3-pip \
         libgl1-mesa-glx \
         curl \
-        lsb-release \
         sudo \
     && rm -rf /var/lib/apt/lists/* \
-    && if ! [[ "22.04" == "$(lsb_release -rs)" ]]; then \
-            echo "Ubuntu $(lsb_release -rs) is not currently supported."; \
+    && echo "Checking Ubuntu version..." \
+    && ubuntu_version=$(cat /etc/os-release | grep VERSION_ID | cut -d '"' -f 2) \
+    && if [ "$ubuntu_version" != "20.04" ]; then \
+            echo "Ubuntu $ubuntu_version is not currently supported."; \
             exit 1; \
        fi \
+    && echo "Adding Microsoft package repository..." \
     && curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list \
+    && curl https://packages.microsoft.com/config/ubuntu/$ubuntu_version/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
+    echo "Installing MS SQL Server tools..." \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && ACCEPT_EULA=Y apt-get install -y mssql-tools18 \
-    && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc \
-    && source ~/.bashrc \
-    && apt-get install -y unixodbc-dev
+    && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> /root/.bashrc \
+    && echo "Installing additional dependencies..." \
+    # && apt-get install -y libodbc-dev \
+    && echo "Setup completed successfully."
+
 
 WORKDIR /code
 
