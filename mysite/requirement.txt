@@ -2,6 +2,6 @@ deepface
 Django==4.2.11
 django-cors-headers
 djangorestframework
-psycopg2-binary==2.9.1
 mssql-django
 Pillow
+pyodbc
