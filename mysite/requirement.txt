@@ -5,3 +5,5 @@ djangorestframework
 mssql-django
 Pillow
 pyodbc
+python-dotenv
+requests

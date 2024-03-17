@@ -3,12 +3,20 @@ FROM ubuntu:20.04
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV CAMERA_VALUE=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        build-essential \
         python3 \
+        python3-dev \
         python3-pip \
         libgl1-mesa-glx \
+        libglib2.0-0 \
+        libsm6 \ 
+        libxrender1 \ 
+        libxext6 \
+        gcc \
         curl \
         sudo \
     && rm -rf /var/lib/apt/lists/* \
@@ -28,7 +36,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/* \
     && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> /root/.bashrc \
     && echo "Installing additional dependencies..." \
-    # && apt-get install -y libodbc-dev \
+    && pip install --upgrade pip \
     && echo "Setup completed successfully."
 
 
@@ -40,4 +48,4 @@ RUN pip install --no-cache-dir -r requirement.txt
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
