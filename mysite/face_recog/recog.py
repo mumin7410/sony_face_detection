@@ -63,7 +63,7 @@ class FaceRecognition:
                             # transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=int(os.environ.get('CAMERA_VALUE', 1)), Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
                             # transaction.save()
                             data = {
-                                'EmployeeID': EmployeeID,
+                                'EmpID': EmployeeID,
                                 'Name': Name,
                                 'DateTime': time.strftime('%Y-%m-%d %H:%M:%S'),
                                 'CameraNo': int(os.getenv('CAMERA_NUMBER')),
@@ -75,7 +75,7 @@ class FaceRecognition:
                     # transaction = Transaction(EmployeeID=EmployeeID, Name=Name, DateTime=time.strftime('%Y-%m-%d %H:%M:%S'), CameraNo=int(os.environ.get('CAMERA_VALUE', 1)), Image=File(open(Path(temp_face_path).relative_to(settings.BASE_DIR), "rb")))
                     # transaction.save()
                     data = {
-                        'EmployeeID': EmployeeID,
+                        'EmpID': EmployeeID,
                         'Name': Name,
                         'DateTime': time.strftime('%Y-%m-%d %H:%M:%S'),
                         'CameraNo': int(os.getenv('CAMERA_NUMBER')),
